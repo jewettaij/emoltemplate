@@ -1,0 +1,61 @@
+import "spce_flex.et"  # <- This defines the SPCE water molecule.
+
+import "ions.et"       # <- This defines the ions "NaIon" and "ClIon".
+
+# Periodic Boundary Conditions
+
+write_once("Data Boundary") {
+  setmd box 34.5 34.5 34.5
+  setmd periodic 1 1 1
+}
+
+
+# The next command generates a (rather dense) cubic lattice with
+# spacing 3.45 Angstroms. (The pressure must be equilibrated later.)
+
+wat  = new SPCEflex [10].move(0.00, 0.00, 3.45) 
+                    [10].move(0.00, 3.45, 0.01) 
+                    [10].move(3.45, 0.01, 0.01)
+
+# We now create a 2x2x2 lattice of Na+ and Cl- ions:
+
+na = new NaIon [2].move(0,0,17.25) 
+               [2].move(0,17.25,0)
+               [2].move(17.25,0,0)
+
+cl = new ClIon [2].move(0,0,17.25) 
+               [2].move(0,17.25,0)
+               [2].move(17.25,0,0)
+
+na[*][*][*].move(5,5,5)
+cl[*][*][*].move(12,12,12)
+
+# (The (5,5,5) and (12,12,12) translational shifts
+#  prevent the Na and Cl ions from overlapping
+#  with the water molecules or each other.)
+
+
+
+# I don't know if ESPResSo supports mixing of Lennard-Jones coefficients.
+# If not, then at some point we have to define interactions between 
+# atoms of different types (in different molecules):
+#  (Note: I just used the standard Lorentz-Berthelot mixing rules.)
+# (We already defined LJ interactions between @atom:SPCE/O and @atom:SPCE/H.)
+
+write_once("In Settings") {
+  inter @atom:NaIon/X @atom:ClIon/X     lennard-jones 0.06714555 1.9615 10.0
+  inter @atom:NaIon/X @atom:SPCEflex/O  lennard-jones 0.23401981 2.189  10.0
+  inter @atom:ClIon/X @atom:SPCEflex/O  lennard-jones 0.04455907 2.9385 10.0
+  inter @atom:NaIon/X @atom:SPCEflex/H  lennard-jones 0.0        2.189  10.0
+  inter @atom:ClIon/X @atom:SPCEflex/H  lennard-jones 0.0        2.9385 10.0
+}
+
+
+# The time_step must be defined before any "rigid_bonds" are used.
+# Text written to the "In Init" section will be inserted
+# into the final TCL file before all other commands.
+
+
+write_once("In Init") {
+  setmd time_step 0.02
+}

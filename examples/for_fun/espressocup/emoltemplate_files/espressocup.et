@@ -1,0 +1,61 @@
+CupBead {
+  write("Data Atoms") {
+    part $atom  pos 0.00000 0.000000 0.0000  type @atom q 0.0  mass 1.0
+  }
+  write_once("Data Pair Coeffs") {
+    inter @atom @atom lennard-jones 0.025 1.0 2.5
+  }
+}
+
+Cup {
+  ring[0] = new CupBead.move(0,  0,  1)  [1]
+  ring[1] = new CupBead.move(0, 1.15,1) [7].rot(51.4286, 0,0,1)
+  ring[2] = new CupBead.move(0, 2.0, 1) [12].rot(30.0000, 0,0,1)
+  ring[3] = new CupBead.move(0, 2.3, 2) [14].rot(25.7143, 0,0,1)
+  ring[4] = new CupBead.move(0, 2.6, 3) [16].rot(22.5000, 0,0,1)
+  ring[5] = new CupBead.move(0, 2.9, 4) [18].rot(20.0000, 0,0,1)
+  ring[6] = new CupBead.move(0, 3.2, 5) [20].rot(18.0000, 0,0,1)
+  ring[7] = new CupBead.move(0, 3.5, 6) [22].rot(16.3636, 0,0,1)
+  handle  = new CupBead.move(0,0,1.43).rot(-10,1,0,0) [6].rot(-40.00, 1,0,0)
+  handle[*].move(0, 3.6, 4.0)
+}
+
+SaucerBead {
+  write("Data Atoms") {
+    part $atom  pos 0.00000 0.000000 0.0000  type @atom q 0.0  mass 1.0
+  }
+  write_once("Data Pair Coeffs") {
+    inter @atom @atom lennard-jones 0.025 1.0 2.5
+  }
+}
+
+Saucer {
+  ring[0] = new SaucerBead.move(0,   0,   0)  [1]
+  ring[1] = new SaucerBead.move(1.08,0,0.04)  [6].rot(60, 0,0,1)
+  ring[2] = new SaucerBead.move(2.16,0,0.16) [12].rot(30, 0,0,1)
+  ring[3] = new SaucerBead.move(3.24,0,0.36) [18].rot(20, 0,0,1)
+  ring[4] = new SaucerBead.move(4.32,0,0.64) [24].rot(15, 0,0,1)
+}
+
+
+# We should now define non-bonded interactions between different atom types:
+
+write_once("Data Pair Coeffs") {
+  inter @atom:CupBead @atom:SaucerBead lennard-jones 0.5 1.0 2.5
+}
+
+
+
+ESPResSoCup {
+  cup    = new Cup
+  saucer = new Saucer
+}
+
+
+# Note: The CupBead and SaucerBead "molecule" examples are unusual 
+#       because they both contain only one atom.
+#
+# Had their been multiple atoms, then each of the "$atom", and "@atom" variables
+# would be followed by a colon ":" and a name or type name, such as "$atom:C1"
+# or "@atom:C".  These names uniquely dentify each atom, and each atom-type 
+# within the molecule.

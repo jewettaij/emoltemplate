@@ -1,0 +1,32 @@
+import "polymer.et"
+
+
+# Specify the periodic boundary conditions:
+write_once("Data Boundary") {
+  setmd box 180.0 180.0 180.0
+  setmd periodic 1 1 1
+}
+
+
+# Create 27 polymers (=3x3x3) in a rectangular grid
+
+polymers = new Polymer [3].move(60.0, 0, 0)
+                       [3].move(0, 60.0, 0)
+                       [3].move(0, 0, 60.0)
+
+
+
+
+
+# ----- everything below is optional: -----
+# Shift some of the polymers in the Z direction by a distance of 20.0
+
+polymers[1][*][*].move(0,0,20)
+
+# We applied this move command to all the 
+# polymers in the middle slab (with constant X).
+# More examples of applying the "move" command:
+
+polymers[*][1][*].move(20,0,0)
+polymers[*][*][1].move(0,20,0)
+

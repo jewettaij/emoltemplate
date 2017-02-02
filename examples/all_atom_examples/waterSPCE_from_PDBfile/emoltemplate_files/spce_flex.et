@@ -1,0 +1,77 @@
+# file "spce_flex.et"
+#
+#    H1     H2
+#      \   /
+#        O
+#
+# This is stiff but flexible version of the "SPC/E" 
+# water model that uses short-range electrostatics.
+# (Not optimized.  Do not use it in a publication.)
+
+
+
+SPCEflex {
+
+  write("Data Atoms") {
+    part $atom:o  pos  0.00000 0.000000 0.0000 type @atom:O q -0.8476 mass 16.0 
+    part $atom:h1 pos  0.81649 0.577359 0.0000 type @atom:H q  0.4238 mass  1.0
+    part $atom:h2 pos -0.81649 0.577359 0.0000 type @atom:H q  0.4238 mass  1.0
+  }
+
+  write("Data Bonds") {
+    part $atom:o  bond @bond:b_OH  $atom:h1
+    part $atom:o  bond @bond:b_OH  $atom:h2
+  }
+
+  # 2-body non-bonded interactions:
+
+  write_once("In Settings") {
+    inter @atom:O @atom:O lennard-jones 0.1553 3.166 10.0
+    inter @atom:O @atom:H lennard-jones 0.0    3.166 10.0
+    inter @atom:H @atom:H lennard-jones 0.0    3.166 10.0
+  }
+
+  # 2-body (bonded) interactions:
+  #
+  #   Ubond(r) = (k/2)*(r-r0)^2
+  #
+  #           bond_type       bond_Style   k     r0
+  write_once("In Settings") {
+    inter  @bond:b_OH         harmonic    600.0  1.0
+  }
+
+  
+  # 3-body interactions in this example are of this type:
+  #
+  # Uangle(theta) = (k/2)*(theta-theta0)^2   
+  #
+  #     (k in kcal/mol/rad^2, theta0 in radians)
+  #
+  # inter  angleType  stylename  k     theta0
+
+  write_once("In Settings") {
+    inter @bond:a_HOH   angle   600.0 1.91061193216
+  }
+
+  write("Data Angles") {
+    part $atom:o  bond  @bond:a_HOH  $atom:h1  $atom:h2
+  }
+
+} # SPCEflex
+
+
+
+
+
+
+
+
+
+
+
+# Making the force field parameters any stiffer requires a smaller timestep.
+# I gave up trying to get rigid bonds to work.
+# For anyone who cares, here are the commands I came up with:
+# inter @bond:b_OH rigid_bond 1.0  0.05 0.5
+# inter @bond:b_HH rigid_bond 1.6329808618402344 0.05 0.5
+# part $atom:h1 bond @bond:b_HH  $atom:h2

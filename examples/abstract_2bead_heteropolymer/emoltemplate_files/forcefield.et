@@ -1,0 +1,96 @@
+# The "HPForceField" is a force-field environment object containing 
+# force-field data, atomic masses, and bond rules.
+# Later, when we define molecules (such as "H" and "P"), we can inherit
+# atom types and bond-rules from this force-field.  This will automatically
+# assign bonds and angular interactions according to atom (and bond) type.
+
+
+HPForceField {
+
+  # There are 3 atom types:
+
+  # 2-body (non-bonded) interactions:
+  #
+  #   Uij(r) = 4*eps_ij * ( (sig_ij/r)^12 - (sig_ij/r)^6 )
+  #
+  # Hydrophobic side-chain (R) atoms are attractive (large epsilon parameter).
+  # Polar side-chains and backbone atoms are not attractive (small epsilon).
+  #
+  #             i        j       pairstylename     eps   sig  rcut
+  #
+  write_once("In Settings") {
+    inter   @atom:CA  @atom:CA   lennard-jones    0.10   2.0  9.0
+    inter   @atom:HR  @atom:HR   lennard-jones    2.50   3.6  9.0
+    inter   @atom:PR  @atom:PR   lennard-jones    0.10   3.6  9.0
+    # interactions between atoms of different types:
+    inter   @atom:CA  @atom:HR   lennard-jones    0.50   2.8  9.0
+    inter   @atom:CA  @atom:PR   lennard-jones    0.10   2.8  9.0
+    inter   @atom:HR  @atom:PR   lennard-jones    0.50   3.6  9.0
+  }
+
+  # Optional: Assign bond types @bond:b_Backbone or @bond:b_Sidechain
+  #           according to atom type.  (This can be overridden.)
+
+  write_once("Data Bonds By Type") {
+    @bond:b_Backbone   @atom:CA @atom:CA
+    @bond:b_Sidechain  @atom:CA @atom:HR
+    @bond:b_Sidechain  @atom:CA @atom:PR
+  }
+
+  # 2-body (bonded) interactions:
+  #
+  #   Ubond(r) = (k/2)*(r-r0)^2
+  #
+  #         bond_type       bond_Style   k     r0
+  write_once("In Settings") {
+    inter  @bond:b_Sidechain  harmonic    30.0   3.4
+    inter  @bond:b_Backbone   harmonic    30.0   3.7
+  }
+
+  # 3-body interactions in this example are listed by atomType and bondType
+  # The atomIDs involved are determined automatically.  The forumula used is:
+  #
+  # Uangle(theta) = (k/2)*(theta-theta0)^2   
+  #     (k in kcal/mol/rad^2, theta0 in radians)
+  #
+  # The corresponding command is:
+  #
+  #          angleType      stylename    k     theta0
+
+  write_once("In Settings") {
+    inter  @bond:a_Sidechain  angle    30.0   1.9896753
+    inter  @bond:a_Backbone   angle    30.0   2.3038346
+  }
+
+  # Rules for determining 3-body angle interactions by type
+  # angle-type      atomType1 atomType2 atomType3
+
+  write_once("Data Angles By Type") {
+    @bond:a_Backbone  @atom:CA @atom:CA  @atom:CA
+    @bond:a_Sidechain @atom:CA @atom:CA  @atom:*R
+  }
+
+  # 4-body interactions in this example are listed by atomType and bondType
+  # The atomIDs involved are determined automatically.  The forumula used is:
+  #
+  # Udihedral(phi) = K * (1 + cos(n*phi - p))
+  #
+  #     The d parameter is in degrees, K is in kcal/mol/rad^2.
+  #
+  # The corresponding command is 
+  # inter dihedralType dihedralstylename  n  K  p
+
+  write_once("In Settings") {
+    inter  @bond:d_CCCC    dihedral     1 -0.5 3.141592653589793
+    inter  @bond:d_RCCR    dihedral     1 -1.5 3.141592653589793
+  } # write_once("In Settings")
+
+  # dihedral-type AtomType1 AtomType2 AtomType3 AtomType4
+
+  write_once("Data Dihedrals By Type") {
+    @bond:d_CCCC @atom:CA  @atom:CA @atom:CA @atom:CA
+    @bond:d_RCCR @atom:*R  @atom:CA @atom:CA @atom:*R  #"*R" <--> "HR" or "PR"
+  }
+
+}  # HPForceField
+

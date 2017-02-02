@@ -1,0 +1,24 @@
+import "spce_flex.et"
+
+wat = new SPCEflex [826]
+
+
+
+
+# Note1:
+# The command above does not set the positions of the atoms.
+# So they will have to be loaded later from a PDB or an XYZ file.  There 
+# should be a .PDB file in this directory.  (You can copy atomic coordinates
+# from a pdb file using  "emoltemplate.sh -pdb solvate.pdb system.lt"
+# Make sure the number of water molecules matches the number above "[826]".)
+
+
+# Note2:
+# The time_step must be defined before any "rigid_bonds" are used.
+# Text written to the "In Init" section will be inserted
+# into the final TCL file before all other commands.
+
+
+write_once("In Init") {
+  setmd time_step 0.02
+}

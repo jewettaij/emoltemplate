@@ -1,0 +1,21 @@
+import "forcefield.et"   # defines "HPForceField"
+
+
+# Define the "H" monomer type  ("H" <--> "hydrophobic")
+
+H inherits HPForceField {
+
+  #       atom-id        x     y        z           atom-type  charge     mass
+  write("Data Atoms") {
+    part $atom:ca pos 0.000 1.0000  0.0000000  type @atom:CA  q 0.0  mass 13.0
+    part $atom:r  pos 0.000 4.4000  0.0000000  type @atom:HR  q 0.0  mass 50.0
+  }
+
+  write("Data Bond List") {
+     $atom:ca $atom:r
+  }
+
+}
+
+
+

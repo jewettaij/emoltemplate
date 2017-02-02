@@ -1,0 +1,38 @@
+# We define two molecule classes to represent Na+ and Cl- ions, respectively.
+# This may seem like overkill since they both only consist of one atom each.
+
+
+# Note: Monovalent ion parameters for Ewald and SPC/E water
+#       are from: Joung & Cheatham JPCB (2008)
+# These Lennard Jones parameters match the parameters for ions
+# in SPC/E water in the "frcmod.ionsjc_spce" file distributed 
+# with Amber (the 2010 version).
+
+
+NaIon {
+  write("Data Atoms") {
+    part $atom:x pos 0.0000 0.0000 0.0000  type @atom:X q 1.0  mass 22.9898
+  }
+  write_once("Data Pair Coeffs") {
+    inter @atom:X @atom:X lennard-jones 0.3526418 1.212 10.0
+  }
+} # NaIon
+
+
+ClIon {
+  write("Data Atoms") {
+    part $atom:x pos 0.0000 0.0000 0.0000  type @atom:X q -1.0  mass 35.453
+  }
+  write_once("Data Pair Coeffs") {
+    inter @atom:X @atom:X lennard-jones 0.0127850 2.711 10.0
+  }
+} # NaIon
+
+
+# At some point, we will have to do define interactions between unlike 
+# atom types.  We can do that now, or in system.et (or both)
+
+write_once("Data Pair Coeffs") {
+  inter @atom:NaIon/X @atom:ClIon/X lennard-jones 0.067145554 1.9615 10.0
+}
+
