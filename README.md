@@ -39,8 +39,7 @@ https://github.com/jewettaij/moltemplate
 
 and follow the installation instructions.
 
-## Warning: Disregard the "doc" and "examples" subdirectories located in
-the "moltemplate" repository.
+## Warning: Disregard the "doc" and "examples" subdirectories located in the "moltemplate" repository.
 (These files are specific to the LAMMPS version of moltemplate, not ESPReSso.)
 
 Alternately, if that does not work, you can download a recent .tar.gz file from
