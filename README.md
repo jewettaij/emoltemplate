@@ -37,7 +37,7 @@ Obtain moltemplate at:
 
 https://github.com/jewettaij/moltemplate
 
-and follow the installation instructions.  (Again, please disregard the "doc" and "examples" subdirectories located in the "moltemplate" repository.  These files are specific to the LAMMPS version of moltemplate, not ESPReSso.)
+and follow the installation instructions.  (Again, please disregard the "doc" and "examples" subdirectories located in the "moltemplate" repository.  These files are specific to the LAMMPS version of moltemplate, not ESPResSo.)
 Alternately, if that does not work, you can download a recent .tar.gz file from
 
 http://moltemplate.org/espresso/download.html
