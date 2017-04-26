@@ -15,7 +15,7 @@ https://github.com/jewettaij/moltemplate
 
 ## Typical usage
 
-    emoltemplate.sh [-atomstyle style] [-pdb/-xyz coord_file] system.lt
+    emoltemplate.sh [-pdb/-xyz coord_file] system.lt
 
 ## Web page
 
@@ -37,14 +37,12 @@ Obtain moltemplate at:
 
 https://github.com/jewettaij/moltemplate
 
-and follow the installation instructions.
+and follow the installation instructions.  Alternately, if that does not work, you can download a recent .tar.gz file from
+
+http://moltemplate.org/espresso/download.html
 
 ## Warning: Disregard the "doc" and "examples" subdirectories located in the "moltemplate" repository.
 (These files are specific to the LAMMPS version of moltemplate, not ESPReSso.)
-
-Alternately, if that does not work, you can download a recent .tar.gz file from
-
-http://moltemplate.org/espresso/download.html
 
 ## License
 
