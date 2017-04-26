@@ -33,19 +33,20 @@ Again, this git repository only contains documentation and examples
 for the emoltemplate.sh molecule-builder software.
 
 To install emoltemplate, you must install moltemplate.
-Obtain moltemplate at:
+To obtain the latest version of moltemplate, visit:
 
 https://github.com/jewettaij/moltemplate
 
 and follow the installation instructions.  (Again, please disregard the "doc" and "examples" subdirectories located in the "moltemplate" repository.  These files are specific to the LAMMPS version of moltemplate, not ESPResSo.)
-Alternately, if that does not work, you can download a recent .tar.gz file from
+
+Alternatively, if that does not work, you can download a recent .tar.gz file from:
 
 http://moltemplate.org/espresso/download.html
 
-This .tar.gz file should contain moltemplate in addition to the emoltemplate documentation.  (Although it might not be the latest version.)
+This .tar.gz file should contain moltemplate in addition to the emoltemplate documentation.
 
 ## License
 
 Emoltemplate is available under the terms of the open-source 3-clause BSD 
-license.  (See `LICENSE.txt`.)
+license.  (See `LICENSE.md`.)
 
