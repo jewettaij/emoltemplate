@@ -34,7 +34,6 @@
 
 \author{
   Andrew Jewett, \\
-  Jensen Lab (Caltech), Shea Lab (UCSB) \\
 \includegraphics[height=0.3cm]{author_email.png}
 }
 \date \today
@@ -311,7 +310,7 @@ moltemplate source code can be found at:
 \url{http://www.moltemplate.org/espresso/download.html}
 %\subsubsection*{tar.gz Archives}
 If you obtained moltemplate or emoltemplate as a .tar.gz file,
-(as opposed to github), then you can unpack it using:
+(as opposed to using git), then you can unpack it using:
 \begin{verbatim}
 tar -xzvf emoltemplate_2016-12-08.tar.gz
 \end{verbatim}
@@ -378,6 +377,43 @@ setenv PATH "$PATH:$HOME/moltemplate/moltemplate/scripts"
 log back in again for the changes to take effect.}
 
 
+\subsubsection*{WINDOWS installation suggestions}
+
+You can install both emoltemplate and ESPResSo in windows,
+but you will first need to install the \textit{BASH}
+shell environment on your computer.  I recommend installing
+\textbf{virtualbox}(\url{https://www.virtualbox.org}) in windows together
+with a (debian-based) linux distribution with a lightweight desktop such as
+\textbf{xubuntu}(\url{https://xubuntu.org}).
+Alternatively, if you are using Windows 10 or later, you can try installing the
+\textbf{Windows Subsystem for Linux (WSL)}
+(\textit{which is text only},
+ \url{https://docs.microsoft.com/en-us/windows/wsl})
+or
+\textbf{Hyper-V}
+(\url{https://www.nakivo.com/blog/run-linux-hyper-v/}).
+Otherwise, if you are using an older version of windows, try installing
+\textbf{CYGWIN}
+(\url{https://www.cygwin.com/}) instead.
+
+To use ESPResSo and emoltemplate, you will also need to install (and learn
+how to use) a text editor.  (Word, Wordpad, and Notepad will not work.)
+If you are \textit{NOT using WSL}, then you 
+can use popular graphical text editors such as
+\textit{Atom}, \textit{Sublime},
+\textit{Notepad++}, \textit{VSCode},
+and the graphical versions of \textit{emacs} and \textit{vim}.
+(\textit{Note:} Don't use these editors if you are using the WSL environment.
+Under WSL, these editors may cause file system corruption.
+Avoid them for now. (\url{https://www.reddit.com/r/bashonubuntuonwindows/comments/6bu1d1/since_we_shouldnt_edit_files_stored_in_wsl_with/})
+If you \textit{ARE using WSL} then you are restricted to using
+non-graphical text editors which you can safely install and
+run from within the WSL terminal.
+These include: \textit{nano}, \textit{ne},
+\textit{emacs} (text version),
+\textit{vim} (text version), and \textit{jove}.
+
+
 
 \pagebreak
 \section{Quick reference \textit{(skip on first reading)}}
@@ -385,8 +421,6 @@ log back in again for the changes to take effect.}
 \section*{
 \textit{Note: New users should skip to section \ref{sec:tutorial}}
 }
-
-
 
 \subsection{Emoltemplate commands}
 
@@ -832,6 +866,44 @@ you want the scaling to occur.
  Of omitted, the origin is used.)
 \\
 \hline
+\begin{tabular}[t]{l}
+  \textit{.quat($a,b,c,d$)} \\
+  \textit{.quat($a,b,c,d,x_0,y_0,z_0$)} \\
+  %\textit{.quatT($a,b,c,d$)} \\
+  %\textit{.quatT($a,b,c,d,x_0,y_0,z_0$)} \\
+\end{tabular}
+  &
+ Rotate atom coordinates by the rotation corresponding
+ to quaternion $a+b\mathbf{i}+c\mathbf{j}+b\mathbf{k}$
+ (around \mbox{$(x_0,y_0,z_0)$}, if specified).
+ %The \textit{.quatT(a,b,c,d)} variant performs the inverse rotation.
+ %(Equivalent to \textit{.quat(a,-b,-c,-d)}.)
+\\
+\hline
+\textit{.matrix($M_{1,1}$,$M_{1,2}$,$M_{1,3}$,$M_{2,1}$,}\\
+\textit{$M_{2,2}$,$M_{2,3}$,$M_{3,1}$,$M_{3,2}$,$M_{3,3}$)}
+&
+Apply a general linear coordinate transformation.
+\begin{eqnarray*}
+\left(\begin{array}{c}
+       x' \\
+       y' \\
+       z'
+\end{array}\right)
+=
+\left(\begin{array}{ccc}
+       M_{1,1} & M_{1,2} & M_{1,3} \\
+       M_{2,1} & M_{2,2} & M_{2,3} \\
+       M_{3,1} & M_{3,2} & M_{3,3}
+\end{array}\right)
+\left(\begin{array}{c}
+       x \\
+       y \\
+       z
+\end{array}\right)
+\end{eqnarray*}
+\\
+\hline
 \multicolumn{2}{c} {
 \textbf{
 \textit{Note:}
@@ -1144,11 +1216,11 @@ wat = new SPCEflex [1000]
 from the example above with 1000 lines:
 \begin{verbatim}
 wat1    = new SPCEflex
-wat2    = new SPCEflex.move(3.450, 0.0, 0.0)
-wat3    = new SPCEflex.move(6.900, 0.0, 0.0)
-wat4    = new SPCEflex.move(10.35, 0.0, 0.0)
+wat2    = new SPCEflex.move(3.1034, 0.00, 0.00)
+wat3    = new SPCEflex.move(6.2068, 0.00, 0.00)
+wat4    = new SPCEflex.move(9.3102, 0.00, 0.00)
   :           :
-wat1000 = new SPCEflex.move(34.50, 34.50, 34.50)
+wat1000 = new SPCEflex.move(31.034, 31.034, 31.034)
 \end{verbatim}
 Specifying geometry this way is tedious.
 Alternatively, emoltemplate has simple commands for arranging multiple 
@@ -1160,9 +1232,9 @@ For example, you can generate a simple cubic lattice of
 using a single command 
 (which in this example we split into multiple lines)
 \begin{verbatim}
-wat  = new SPCEflex [10].move(0,0,3.45) 
-                    [10].move(0,3.45,0) 
-                    [10].move(3.45,0,0)
+wat  = new SPCEflex [10].move(0.0, 0.0, 3.1034) 
+                    [10].move(0.0, 3.1034, 0.0) 
+                    [10].move(3.1034, 0.0, 0.0)
 \end{verbatim}
 (See section \ref{sec:coordinates} for more details and examples.)
 This will create 1000 molecules with names like
@@ -1185,7 +1257,7 @@ We must specify the dimensions of the simulation boundary
 using the ``write\_once(``Data Boundary'')'' command.  
 \begin{verbatim}
 write_once("Data Boundary") {
-  setmd box 34.5 34.5 34.5
+  setmd box 31.034 31.034 31.034
   setmd periodic 1 1 1
 }
 \end{verbatim}

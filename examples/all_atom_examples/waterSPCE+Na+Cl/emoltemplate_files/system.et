@@ -5,7 +5,7 @@ import "ions.et"       # <- This defines the ions "NaIon" and "ClIon".
 # Periodic Boundary Conditions
 
 write_once("Data Boundary") {
-  setmd box 34.5 34.5 34.5
+  setmd box 31.0342 31.0342 31.0342
   setmd periodic 1 1 1
 }
 
@@ -13,27 +13,26 @@ write_once("Data Boundary") {
 # The next command generates a (rather dense) cubic lattice with
 # spacing 3.45 Angstroms. (The pressure must be equilibrated later.)
 
-wat  = new SPCEflex [10].move(0.00, 0.00, 3.45) 
-                    [10].move(0.00, 3.45, 0.01) 
-                    [10].move(3.45, 0.01, 0.01)
+wat  = new SPCEflex [10].move(0.00, 0.00, 3.10342) 
+                    [10].move(0.00, 3.10342, 0.01) 
+                    [10].move(3.10342, 0.01, 0.01)
 
 # We now create a 2x2x2 lattice of Na+ and Cl- ions:
 
-na = new NaIon [2].move(0,0,17.25) 
-               [2].move(0,17.25,0)
-               [2].move(17.25,0,0)
+na = new NaIon [2].move(0,0,15.5171) 
+               [2].move(0,15.5171,0)
+               [2].move(15.5171,0,0)
 
-cl = new ClIon [2].move(0,0,17.25) 
-               [2].move(0,17.25,0)
-               [2].move(17.25,0,0)
+cl = new ClIon [2].move(0,0,15.5171) 
+               [2].move(0,15.5171,0)
+               [2].move(15.5171,0,0)
 
-na[*][*][*].move(5,5,5)
-cl[*][*][*].move(12,12,12)
+na[*][*][*].move(4.7,4.7,4.7)
+cl[*][*][*].move(10.9,10.9,10.9)
 
-# (The (5,5,5) and (12,12,12) translational shifts
-#  prevent the Na and Cl ions from overlapping
-#  with the water molecules or each other.)
-
+# (The (4.7,4.7,4.7) and (10.9,10.9,10.9) translational shifts
+#  are arbitrary and were chosen only to prevent the Na and Cl ions
+#  from overlapping exactly with the water molecules or each other.)
 
 
 # I don't know if ESPResSo supports mixing of Lennard-Jones coefficients.
