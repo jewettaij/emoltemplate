@@ -15,7 +15,9 @@ https://github.com/jewettaij/moltemplate
 
 ## Typical usage
 
-    emoltemplate.sh [-pdb/-xyz coord_file] system.lt
+```
+emoltemplate.sh [-pdb/-xyz coord_file] system.lt
+```
 
 ## Web page
 
@@ -43,10 +45,17 @@ Alternatively, if that does not work, you can download a recent .tar.gz file fro
 
 http://moltemplate.org/espresso/download.html
 
-This .tar.gz file should contain moltemplate in addition to the emoltemplate documentation.
+This .tar.gz file should contain the emoltemplate documentation.
 
 ## License
 
-Emoltemplate is available under the terms of the open-source 3-clause BSD 
-license.  (See `LICENSE.md`.)
+With the exception of one file
+([ttree_lex.py](./moltemplate/ttree_lex.py)),
+emoltemplate and its examples
+are available under the terms of the [MIT license](LICENSE.md).
 
+The remaining file, ([ttree_lex.py](./moltemplate/ttree_lex.py)),
+uses the [PSF license](https://docs.python.org/3/license.html).
+(*The PSF is not a copyleft license.
+It is similar to the BSD and MIT licenses and
+[is compatible with the the GPL license](https://docs.python.org/3/license.html).)*

@@ -1,17 +1,9 @@
 import "spce_flex.et"  # <- This defines the SPCE water molecule.
-
 import "ions.et"       # <- This defines the ions "NaIon" and "ClIon".
-
-# Periodic Boundary Conditions
-
-write_once("Data Boundary") {
-  setmd box 31.0342 31.0342 31.0342
-  setmd periodic 1 1 1
-}
 
 
 # The next command generates a (rather dense) cubic lattice with
-# spacing 3.45 Angstroms. (The pressure must be equilibrated later.)
+# spacing 3.10342 Angstroms. (The pressure must be equilibrated later.)
 
 wat  = new SPCEflex [10].move(0.00, 0.00, 3.10342) 
                     [10].move(0.00, 3.10342, 0.01) 
@@ -33,6 +25,14 @@ cl[*][*][*].move(10.9,10.9,10.9)
 # (The (4.7,4.7,4.7) and (10.9,10.9,10.9) translational shifts
 #  are arbitrary and were chosen only to prevent the Na and Cl ions
 #  from overlapping exactly with the water molecules or each other.)
+
+
+# Periodic Boundary Conditions
+
+write_once("Data Boundary") {
+  setmd box 31.0342 31.0342 31.0342
+  setmd periodic 1 1 1
+}
 
 
 # I don't know if ESPResSo supports mixing of Lennard-Jones coefficients.
