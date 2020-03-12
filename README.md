@@ -23,6 +23,17 @@ emoltemplate.sh [-pdb/-xyz coord_file] system.lt
 
 http://www.moltemplate.org/espresso
 
+### Documentation
+
+The best way to learn how to use emoltemplate.sh is to find an example
+which is similar to the system that you wish to simulate and modify it.
+Some of the examples in this archive are also demonstrated (with pictures)
+[here](http://moltemplate.org/espresso/visual_examples.html).
+
+All emoltemplate users should probably read chapter 4 of the
+[reference manual](./doc/emoltemplate_manual.pdf)
+*(It's only a few pages long.  The first 3 chapters are optional.)*
+
 ## Requirements
 
 Emoltemplate requires the Bourne-shell, and a recent version of python 
